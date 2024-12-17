@@ -9,6 +9,8 @@
   "boot": "auto",
   "options":
     {
+      "dyndns_server_username": "",
+      "dyndns_server_password": "",
       "fritzbox_endpoint_url": "http://fritz.box:49000",
       "fritzbox_endpoint_interval": "60s",
       "fritzbox_endpoint_timeout": "30s",
@@ -18,6 +20,8 @@
     },
   "schema":
     {
+      "dyndns_server_username": "str?",
+      "dyndns_server_password": "str?",
       "fritzbox_endpoint_url": "str",
       "fritzbox_endpoint_interval": "str",
       "fritzbox_endpoint_timeout": "str",
