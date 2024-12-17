@@ -1,0 +1,29 @@
+{
+  "name": "FritzBox Cloudflare DynDNS",
+  "version": "1.3.0",
+  "slug": "fritzbox_cloudflare_dyndns",
+  "init": false,
+  "description": "Updates a Cloudflare DNS record with your Fritz!Box external IP.",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "services",
+  "boot": "auto",
+  "options":
+    {
+      "fritzbox_endpoint_url": "http://fritz.box:49000",
+      "fritzbox_endpoint_timeout": "30s",
+      "dyndns_server_bind": ":8080",
+      "cloudflare_api_key": "your_cloudflare_zone_api_key",
+      "cloudflare_zones_ipv4": "yourdomain.example.com",
+      "cloudflare_zones_ipv6": "",
+    },
+  "schema":
+    {
+      "fritzbox_endpoint_url": "str",
+      "fritzbox_endpoint_timeout": "str",
+      "dyndns_server_bind": "str",
+      "cloudflare_api_key": "str",
+      "cloudflare_zones_ipv4": "str",
+      "cloudflare_zones_ipv6": "str?",
+    },
+  "ports": { "8080/tcp": 8080 },
+}

@@ -8,28 +8,15 @@ COPY go.mod go.sum /appbuild/
 
 COPY ./ /appbuild
 
-RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/root/go/pkg/mod CGO_ENABLED=0 GOOS=linux go build -o fritzbox-cloudflare-dyndns
+RUN CGO_ENABLED=0 GOOS=linux go build -o fritzbox-cloudflare-dyndns
 
 # Build deployable server
-FROM gcr.io/distroless/static:debug
+FROM ghcr.io/hassio-addons/base:17.0.1
 
-ENV FRITZBOX_ENDPOINT_URL="http://fritz.box:49000" \
-    FRITZBOX_ENDPOINT_TIMEOUT="30s" \
-    DYNDNS_SERVER_BIND=":8080" \
-    DYNDNS_SERVER_USERNAME="" \
-    DYNDNS_SERVER_PASSWORD="" \
-    CLOUDFLARE_API_EMAIL="" \
-    CLOUDFLARE_API_KEY_FILE="" \
-    CLOUDFLARE_ZONES_IPV4="" \
-    CLOUDFLARE_ZONES_IPV6="" \
-    DEVICE_LOCAL_ADDRESS_IPV6="" \
-    METRICS_BIND="" \
-    METRICS_TOKEN_FILE=""
+COPY --from=server_build /appbuild/fritzbox-cloudflare-dyndns /
+RUN chmod +x /fritzbox-cloudflare-dyndns
 
-WORKDIR /app
+COPY run.sh /
+RUN chmod a+x /run.sh
 
-COPY --from=server_build /appbuild/fritzbox-cloudflare-dyndns /app/fritzbox-cloudflare-dyndns
-
-EXPOSE 8080
-
-ENTRYPOINT ["./fritzbox-cloudflare-dyndns"]
+CMD [ "/run.sh" ]
