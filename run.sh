@@ -1,11 +1,14 @@
 #!/usr/bin/with-contenv bashio
 
 # Read configuration from the add-on options
+DYNDNS_SERVER_BIND=:8080
 FRITZBOX_ENDPOINT_URL=$(bashio::config 'fritzbox_endpoint_url')
 FRITZBOX_ENDPOINT_INTERVAL=$(bashio::config 'fritzbox_endpoint_interval')
 FRITZBOX_ENDPOINT_TIMEOUT=$(bashio::config 'fritzbox_endpoint_timeout')
 CLOUDFLARE_ZONES_IPV4=$(bashio::config 'cloudflare_zones_ipv4')
 CLOUDFLARE_ZONES_IPV6=$(bashio::config 'cloudflare_zones_ipv6')
+
+export DYNDNS_SERVER_BIND
 
 export FRITZBOX_ENDPOINT_URL
 export FRITZBOX_ENDPOINT_INTERVAL
